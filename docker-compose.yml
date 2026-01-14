@@ -1,0 +1,13 @@
+services:
+  spark-dev:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: spark-dev
+    working_dir: /home/jovyan/project
+    volumes:
+      - ./:/home/jovyan/project
+    environment:
+      - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+      - SPARK_HOME=/usr/local/spark
+    command: ["bash", "-lc", "sleep infinity"]
