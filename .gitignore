@@ -1,1 +1,27 @@
 /data
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+
+
+# Spark / local artifacts
+spark-warehouse/
+metastore_db/
+*.log
+
+# Secrets
+.env
+*.pem
+*.key
+
+
