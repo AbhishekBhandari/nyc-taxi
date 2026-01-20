@@ -5,6 +5,10 @@ from pyspark.sql import SparkSession, functions as F, types as T
 def parse_args():
     p = argparse.ArgumentParser(description="Gold: daily metrics by pickup zone (Yellow Taxi)")
 
+    ## paths to the files
+    p.add_argument("--silver_path", required=True)
+    p.add_argument("--gold_path", required=True)
+    p.add_argument("--zones_path", required=True)
     # incremental controls (choose one)
     p.add_argument("--event_date", default=None, help="YYYY-MM-DD")
     p.add_argument("--start_date", default=None, help="YYYY-MM-DD")
@@ -59,9 +63,10 @@ def read_zones(spark: SparkSession, zones_path: str):
 
 def main():
     args = parse_args()
-    silver_path = "file:/home/jovyan/project/data/output/silver/nyc_taxi/yellow"
-    gold_path = "file:/home/jovyan/project/data/output/gold/nyc_taxi/yellow_by_pickup_zone"
-    zones_path = "file:/home/jovyan/project/data/dim/taxi_zone_lookup.csv"
+    #initialize the file paths
+    silver_path = f"file:{args.silver_path}"
+    gold_path = f"file:{args.gold_path}"
+    zones_path = f"file:{args.zones_path}"
 
     driver_memory = "4g"
     shuffle_partitions = "32"

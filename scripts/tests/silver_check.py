@@ -1,8 +1,12 @@
 from pyspark.sql import SparkSession, functions as F
 
 spark = SparkSession.builder.master("local[*]").appName("verify_constraints").getOrCreate()
+#ensure the correct path to your silver files on your local
 silver_path = "file:/home/jovyan/project/data/output/silver/nyc_taxi/yellow"
 df = spark.read.parquet(silver_path)
+
+print("print the schema to ensure it looks correct")
+df.printSchema()
 
 checks = {
     "null_pickup": df.filter(F.col("tpep_pickup_datetime").isNull()).count(),

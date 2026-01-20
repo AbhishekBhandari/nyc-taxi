@@ -25,3 +25,7 @@ metastore_db/
 *.key
 
 
+/logs
+# Airflow local config
+config/airflow.cfg
+config/webserver_config.py

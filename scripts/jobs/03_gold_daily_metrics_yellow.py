@@ -3,6 +3,9 @@ from pyspark.sql import SparkSession, functions as F
 
 def parse_args():
     p = argparse.ArgumentParser()
+    ## paths to the files
+    p.add_argument("--silver_path", required=True)
+    p.add_argument("--gold_path", required=True)
     # Choose one incremental mode:
     p.add_argument("--event_date", default=None, help="YYYY-MM-DD")
     p.add_argument("--start_date", default=None, help="YYYY-MM-DD")
@@ -42,10 +45,13 @@ def apply_incremental_filter(df, args):
     return df
 
 def main():
-    silver_path = "file:/home/jovyan/project/data/output/silver/nyc_taxi/yellow"
-    gold_path = "file:/home/jovyan/project/data/output/gold/nyc_taxi/yellow_daily"
 
+    #process the arguments
     args = parse_args()
+    #define the file paths
+    silver_path = f"file:{args.silver_path}"
+    gold_path = f"file:{args.gold_path}"
+
     spark = build_spark("gold_daily_metrics_yellow")
     silver = spark.read.parquet(silver_path)
 

@@ -32,12 +32,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--ingest_month", required=True, help="YYYY-MM (e.g., 2024-01)")
     parser.add_argument("--format", choices=["parquet","csv"], default="parquet")
+    parser.add_argument("--output_path", required=True)
     args = parser.parse_args()
 
     spark = SparkSession.builder.master("local[*]").appName("bronze_yellow").getOrCreate()
 
-    raw_base = "/home/jovyan/project/data/raw/nyc_taxi/yellow"
-    out_base = "/home/jovyan/project/data/output/bronze/nyc_taxi/yellow"
+    out_base = args.output_path
+    CONTAINER_PROJECT_DIR = "/opt/project"
+    raw_base = f"{CONTAINER_PROJECT_DIR}/data/raw/bronze/nyc_taxi/yellow"
 
     raw_path = f"{raw_base}/ingest_month={args.ingest_month}/*"
 

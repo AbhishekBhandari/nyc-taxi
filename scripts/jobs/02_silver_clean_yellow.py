@@ -6,6 +6,8 @@ from pyspark.sql import functions as F
 def main():
     #first parse the ingest_month
     parser = argparse.ArgumentParser(description='Silver cleaning job for NYC Taxi Yellow data')
+    parser.add_argument("--bronze_path", required=True)
+    parser.add_argument("--silver_path", required=True)
     parser.add_argument("--ingest_month", required=True, help="YYYY-MM (e.g., 2024-01)")
     args = parser.parse_args()
 
@@ -23,10 +25,9 @@ def main():
     spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
     spark.conf.set("spark.sql.shuffle.partitions", "32")
 
-    # bronze_path = "file:/home/jovyan/project/data/output/bronze/nyc_taxi/yellow"
-    #
-    bronze_path = f"file:/home/jovyan/project/data/output/bronze/nyc_taxi/yellow/ingest_month={args.ingest_month}"
-    silver_path = "file:/home/jovyan/project/data/output/silver/nyc_taxi/yellow"
+
+    bronze_path = f"file:{args.bronze_path}/ingest_month={args.ingest_month}"
+    silver_path = f"file:{args.silver_path}"
 
     bronze = spark.read.parquet(bronze_path)
 

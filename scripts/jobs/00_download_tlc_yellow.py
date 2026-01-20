@@ -11,36 +11,29 @@ def download(url: str, dest_path: str) -> None:
     urllib.request.urlretrieve(url, dest_path)
     print("Done.")
 
-def main(ingest_month, format):
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("--month", required=True, help="YYYY-MM (e.g., 2024-01")
-    # parser.add_argument("--format", choices=["parquet","csv"], default="parquet")
-    # args = parser.parse_args()
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ingest_month", required=True, help="YYYY-MM (e.g., 2024-01")
+    parser.add_argument("--format", choices=["parquet","csv"], default="parquet")
+    parser.add_argument("--data_dir", required=True)
+    args = parser.parse_args()
 
-    # yyyy, mm = args.month.split("-")
-    yyyy, mm = ingest_month.split("-")
+    yyyy, mm = args.ingest_month.split("-")
+    # yyyy, mm = ingest_month.split("-")
     # TLC filenames follow patterns like:
     # yellow_tripdata_2024-01.parquet (or .csv)
-    # filename = f"yellow_tripdata_{yyyy}-{mm}.{args.format}"
-    filename = f"yellow_tripdata_{yyyy}-{mm}.{format}"
+    filename = f"yellow_tripdata_{yyyy}-{mm}.{args.format}"
+    # filename = f"yellow_tripdata_{yyyy}-{mm}.{format}"
 
     # TLC hosts monthly files at a known location; this generally works for modern datasets.
     # If a specific month is not available in parquet, use --format csv.
     base_url = 'https://d37ci6vzurychx.cloudfront.net/trip-data'
     url = f"{base_url}/{filename}"
 
-    out_dir = f"/home/jovyan/project/data/raw/nyc_taxi/yellow/ingest_month={ingest_month}"
+    out_dir = f"{args.data_dir}/ingest_month={args.ingest_month}"
     dest_path = os.path.join(out_dir, filename)
 
     download(url, dest_path)
 
 if __name__ == "__main__":
-    ## download data for 2023-2025
-    format = 'parquet'
-    for year in range(2023, 2026):
-        for month in range(1,13):
-            month = ('0' + str(month))[-2:]
-            year = str(year)
-            ingest_month = f"{year}-{month}"
-            main(ingest_month, format)
-    # main()
+    main()
