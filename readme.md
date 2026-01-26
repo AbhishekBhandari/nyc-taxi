@@ -1,4 +1,4 @@
-# NYC Taxi Lakehouse (Spark + Airflow) — Bronze / Silver / Gold
+# NYC Taxi Lakehouse (Spark + Airflow) — Medallion Model
 
 End-to-end batch ETL project using **Apache Spark (PySpark)** for transformation and **Apache Airflow** for orchestration.  
 Pipeline ingests NYC TLC Yellow Taxi data by `ingest_month`, writes **Bronze/Silver/Gold** layers to Parquet, and produces daily zone-level aggregates.
@@ -22,15 +22,14 @@ Pipeline ingests NYC TLC Yellow Taxi data by `ingest_month`, writes **Bronze/Sil
    - Daily aggregates by pickup zone and borough
    - Joins to taxi zone dimension table
 
+## Data source
+This project uses the official NYC Taxi & Limousine Commission (TLC) trip record datasets:  
+- [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+
 ## Quickstart
 ### Prerequisites
 - Docker + Docker Compose
 - 8GB+ Docker memory recommended (Spark jobs can OOM at lower limits)
-
-## Data source
-This project uses the official NYC Taxi & Limousine Commission (TLC) trip record datasets:  
-[NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
-
 
 ### 1) Start Spark dev container (optional)
 ```bash
