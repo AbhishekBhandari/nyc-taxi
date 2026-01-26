@@ -1,32 +1,20 @@
-/data
-
 # Python
 __pycache__/
 *.pyc
-*.pyo
-
-# Jupyter
+.venv/
 .ipynb_checkpoints/
 
-# IDE
-.idea/
-.vscode/
+#ide
+.idea
+
+# Spark / Airflow local artifacts
+data/output/
+data/raw/
+docker/logs/
+docker/plugins/__pycache__/
+docker/config/airflow.cfg
+
+# OS
 .DS_Store
-
-
-# Spark / local artifacts
-spark-warehouse/
-metastore_db/
-*.log
-
-# Secrets
 docker/.env
-.env
-*.pem
-*.key
-
-
 /logs
-# Airflow local config
-config/airflow.cfg
-config/webserver_config.py

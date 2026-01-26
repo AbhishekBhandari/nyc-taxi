@@ -10,4 +10,4 @@ services:
     environment:
       - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
       - SPARK_HOME=/usr/local/spark
-    command: ["bash", "-lc", "sleep infinity"]
+    #command: ["bash", "-lc", "sleep infinity"]
